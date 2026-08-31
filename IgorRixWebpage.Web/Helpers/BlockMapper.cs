@@ -52,12 +52,12 @@ namespace IgorRixWebpage.Web.Helpers
             model.Blocks = blockList.Select(block => block.Content.ContentType.Alias switch
             {
                 "pageBanner" => (object?)MapPageBannerBlock(block),
+                "sectionHeader" => (object?)MapSectionHeaderBlock(block),
+                "sectionText" => (object?)MapSectionTextBlock(block),
                 _ => null
             })
             .Where(b => b != null)
             .ToList()!;
-
-            Console.WriteLine($"Is Blocks model mapper property null? {(model.Blocks == null ? 'Y' : 'N')}");
 
             return model;
         }
@@ -71,7 +71,7 @@ namespace IgorRixWebpage.Web.Helpers
             }
 
             var content = block.Content;
-            var media = content.Value<MediaWithCrops>(_publishedValueFallback, "image");
+            // var media = content.Value<MediaWithCrops>(_publishedValueFallback, "image");
 
             var container = new PageBanner
             {
@@ -80,12 +80,53 @@ namespace IgorRixWebpage.Web.Helpers
                 Body = content.Value<string>(_publishedValueFallback, "body") ?? string.Empty,
             };
 
-            Console.WriteLine($"Does MapPageBannerBlock content exist? {(content == null ? 'Y' : 'N')}");
-            Console.WriteLine($"Does MapPageBannerBlock container exist? {(container == null ? 'Y' : 'N')}");
+            return container;
+        }
+
+        public SectionHeader? MapSectionHeaderBlock(BlockListItem block)
+        {
+            if (block == null || block.Content == null)
+            {
+                Console.WriteLine("Null Exception on MapSectionHeaderBlock");
+                return null;
+            }
+
+            var content = block.Content;
+            var media = content.Value<MediaWithCrops>(_publishedValueFallback, "image");
+
+            var container = new SectionHeader
+            {
+                Title = content.Value<string>(_publishedValueFallback, "title") ?? string.Empty,
+                SubTitle = content.Value<string>(_publishedValueFallback, "subTitle") ?? string.Empty,
+                Body = content.Value<string>(_publishedValueFallback, "body") ?? string.Empty,
+                Image = media?.MediaUrl(_publishedUrlProvider),
+                ImageAltText = content.Value<string>(_publishedValueFallback, "imageAltText") ?? string.Empty,
+            };
 
             return container;
         }
 
+        public SectionText? MapSectionTextBlock(BlockListItem block)
+        {
+            if (block == null || block.Content == null)
+            {
+                Console.WriteLine("Null Exception on MapSectionTextBlock");
+                return null;
+            }
+
+            var content = block.Content;
+            var media = content.Value<MediaWithCrops>(_publishedValueFallback, "image");
+
+            var container = new SectionText
+            {
+                Title = content.Value<string>(_publishedValueFallback, "title") ?? string.Empty,
+                Body = content.Value<string>(_publishedValueFallback, "body") ?? string.Empty,
+                Image = media?.MediaUrl(_publishedUrlProvider),
+                ImageAltText = content.Value<string>(_publishedValueFallback, "imageAltText") ?? string.Empty,
+            };
+
+            return container;
+        }
     }
 }
 

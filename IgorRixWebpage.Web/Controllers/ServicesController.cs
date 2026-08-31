@@ -13,7 +13,7 @@ using Umbraco.Cms.Core.Models.Blocks;
 
 namespace IgorRixWebpage.Web.Controllers
 {
-    public class HomePageController : RenderController
+    public class ServicesController : RenderController
     {
         // public HomeController(
         //     ILogger<HomeController> logger,
@@ -30,8 +30,8 @@ namespace IgorRixWebpage.Web.Controllers
         //eg:
         private readonly BlockMapper _blockMapper;
 
-        public HomePageController(
-            ILogger<HomePageController> logger,
+        public ServicesController(
+            ILogger<ServicesController> logger,
             ICompositeViewEngine compositeViewEngine,
             IUmbracoContextAccessor umbracoContextAccessor,
             BlockMapper blockMapper)
@@ -44,12 +44,12 @@ namespace IgorRixWebpage.Web.Controllers
         {
             var contentBlocks = CurrentPage?.Value<BlockListModel>("content");
 
-            var viewModel = new HomePageViewModel
+            var viewModel = new ServicesViewModel
             {
                 PageContentCompositionModel = _blockMapper.MapPageContent(contentBlocks)
             };
-            
-            return View("~/Views/HomePage/Index.cshtml", viewModel);
+        
+            return View("~/Views/Services/Index.cshtml", viewModel);
         }
     }
 }
