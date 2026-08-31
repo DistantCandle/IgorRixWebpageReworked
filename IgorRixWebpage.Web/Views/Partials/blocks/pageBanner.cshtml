@@ -1,0 +1,26 @@
+<section class="page-banner"
+         style="background: #062033 url('@Url.Content("~/images/homepageBanner.png")') no-repeat center/cover;">
+    <div class="page-banner__overlay"></div>
+    <div class="page-banner__container">
+        <div class="page-banner__content">
+            @if (!string.IsNullOrWhiteSpace(Model.Title))
+            {
+                <h1>@Model.Title</h1>
+            }
+
+            @if (!string.IsNullOrWhiteSpace(Model.SubTitle))
+            {
+                <h3>@Model.SubTitle</h3>
+            }
+
+            @if (!string.IsNullOrEmpty(Model.Body))
+            {
+                <div class="page-banner__description">
+                    @Html.Raw(Model.Body)
+                </div>
+            }
+
+            <a href="@Url.Action("Index", "MoreInfo")" class="page-banner__button">Read More</a>
+        </div>
+    </div>
+</section>

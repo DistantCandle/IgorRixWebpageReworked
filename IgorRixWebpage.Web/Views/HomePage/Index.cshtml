@@ -1,0 +1,28 @@
+@model IgorRixWebpage.Web.Models.ViewModels.BasePageViewModel
+@using IgorRixWebpage.Web.Models.ViewModels
+    
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var blocks = Model?.PageContentCompositionModel?.Blocks;
+    var blockViewMap = new Dictionary<Type, string>
+            {
+                // Add new block types here
+                { typeof(IgorRixWebpage.Web.Models.NestedElements.PageBanner), "~/Views/Partials/blocks/pageBanner.cshtml" },
+            };
+
+    if (blocks != null && blocks.Any())
+    {
+        foreach (var block in blocks)
+        {
+            var blockType = block.GetType();
+
+            if (blockViewMap.TryGetValue(blockType, out var viewPath))
+            {
+                @await Html.PartialAsync(viewPath, block)
+            }
+        }
+    }
+}
