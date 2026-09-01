@@ -1,0 +1,222 @@
+// Variables for quick branding adjustments
+$section-font-family: Arial, 'Roboto Slab', Helvetica, sans-serif;
+
+/* Theme adjustments */
+$bg-white: #ffffff;
+$nav-black: #000000;
+$nav-white: #ffffff;
+
+.section-header {
+    position: relative;
+    width: 100%;
+    padding: 15px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: $bg-white;
+
+    h1 {
+        font-size: clamp(2.2rem, 5vw, 3rem);
+        margin: auto;
+        font-weight: 700;
+    }
+
+    h2 {
+        font-size: clamp(2.2rem, 3vw, 3rem);
+        margin: auto;
+        font-weight: 700;
+    }
+
+    h3 {
+        font-size: clamp(18px, 2vw, 22px);
+        font-weight: 400;
+        margin-bottom: 20px;
+        opacity: 0.9;
+    }
+
+
+
+    .section-header-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+
+        .section-header-content {
+            max-width: 100%;
+        }
+    }
+
+    .section-header-body {
+        font-size: clamp(16px, 2vw, 18px);
+        line-height: 1.7;
+    }
+
+    .section-header-image {
+        width: 450px;
+
+        img {
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+    }
+
+    @media (max-width: 1200px) {
+        .section-header-container {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 40px;
+        }
+
+        .section-header-content {
+            max-width: 100%;
+        }
+
+        .section-header-image {
+            width: min(400px, 90vw);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .section-header-container {
+            gap: 30px;
+        }
+
+        .section-header-image {
+            width: min(300px, 90vw);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .section-header-container {
+            gap: 20px;
+        }
+
+        .section-header-image {
+            width: min(250px, 90vw);
+        }
+    }
+}
+
+.section-text {
+    position: relative;
+    width: 100%;
+    padding: 15px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: $bg-white;
+
+    h1 {
+        font-size: clamp(2.2rem, 5vw, 3rem);
+        margin: auto;
+        font-weight: 700;
+    }
+
+    h2 {
+        font-size: clamp(2.2rem, 3vw, 3rem);
+        margin: auto;
+        font-weight: 600;
+    }
+
+    h3 {
+        font-size: clamp(18px, 2vw, 22px);
+        font-weight: 400;
+        margin-bottom: 20px;
+        opacity: 0.9;
+    }
+
+    .section-text-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0 auto;
+        gap: 40px;
+        max-width: 75%;
+
+        .section-text-content {
+            max-width: 100%;
+        }
+    }
+
+    .section-text-body-wrapper {
+        max-width: 100%;
+        display: block;
+        position: relative;
+        align-items: stretch;   /* Forces the image block to match the text height */
+
+        ::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    }
+
+    .section-text-body {
+        font-size: clamp(16px, 2vw, 18px);
+        line-height: 1.7;
+        flex: 1;                /* Takes up all remaining horizontal space */
+
+        p {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+    }
+
+    .section-text-image {
+        float: right;
+        // width: 32%;
+        height: auto;
+        /* Fits the proportions in your mockup */
+        max-width: 32%;;
+        margin-left: 30px;
+        /* Spacing between text and image */
+        
+
+        img {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+    }
+
+
+    @media (max-width: 1200px) {
+        .section-text-container {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 40px;
+        }
+
+        .section-text-content {
+            max-width: 100%;
+        }
+
+        .section-text-image {
+            width: min(400px, 90vw);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .section-text-container {
+            gap: 30px;
+        }
+
+        .section-text-image {
+            width: min(300px, 90vw);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .section-text-container {
+            gap: 20px;
+        }
+
+        .section-text-image {
+            width: min(250px, 90vw);
+        }
+    }
+}

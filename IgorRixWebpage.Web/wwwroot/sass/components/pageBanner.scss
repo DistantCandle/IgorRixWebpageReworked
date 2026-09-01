@@ -1,10 +1,10 @@
 // Variables for quick branding adjustments
-$hero-fallback-bg: #062033; // Added brand-specific dark blue fallback color
-$hero-overlay-color: rgba(6, 32, 51, 0.45);
-$hero-text-color: #ffffff;
-$hero-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-$hero-btn-border: #0091ff;
-$hero-btn-hover: #0076cf;
+$banner-fallback-bg: #062033; // Added brand-specific dark blue fallback color
+$banner-overlay-color: rgba(6, 32, 51, 0.45);
+$banner-text-color: #ffffff;
+$banner-font-family:  Arial, 'Roboto Slab', Helvetica, sans-serif;
+$banner-btn-border: #0091ff;
+$banner-btn-hover: #0076cf;
 
 .page-banner {
     position: relative;
@@ -15,12 +15,12 @@ $hero-btn-hover: #0076cf;
     justify-content: center;
 
     // FALLBACK BACKGROUND CONFIGURATION
-    background-color: $hero-fallback-bg; // Instant solid fill while image loads
+    background-color: $banner-fallback-bg; // Instant solid fill while image loads
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 
-    font-family: $hero-font-family;
+    font-family: $banner-font-family;
     overflow: hidden;
 
     &__overlay {
@@ -29,7 +29,7 @@ $hero-btn-hover: #0076cf;
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(180deg, rgba(6, 32, 51, 0.3) 0%, $hero-overlay-color 100%);
+        background: linear-gradient(180deg, rgba(6, 32, 51, 0.3) 0%, $banner-overlay-color 100%);
         z-index: 1;
     }
 
@@ -51,13 +51,13 @@ $hero-btn-hover: #0076cf;
     &__content {
         text-align: center;
         max-width: 850px;
-        color: $hero-text-color;
+        color: $banner-text-color;
 
         h1 {
             font-size: 3rem;
             font-weight: 700;
             margin-bottom: 10px;
-            color: $hero-text-color;
+            color: $banner-text-color;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
             line-height: 1.2;
 
@@ -70,7 +70,7 @@ $hero-btn-hover: #0076cf;
             font-size: 1.5rem;
             font-weight: 400;
             margin-bottom: 25px;
-            color: $hero-text-color;
+            color: $banner-text-color;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
             opacity: 0.95;
 
@@ -85,7 +85,7 @@ $hero-btn-hover: #0076cf;
         line-height: 1.7;
         font-weight: 400;
         margin-bottom: 35px;
-        color: $hero-text-color;
+        color: $banner-text-color;
         text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 
         @media (max-width: 768px) {
@@ -99,24 +99,24 @@ $hero-btn-hover: #0076cf;
         padding: 10px 38px;
         font-size: 0.95rem;
         font-weight: 600;
-        color: $hero-text-color;
+        color: $banner-text-color;
         text-decoration: none;
         background-color: transparent;
-        border: 2px solid $hero-btn-border;
+        border: 2px solid $banner-btn-border;
         border-radius: 4px;
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         transition: all 0.25s ease-in-out;
 
         &:hover,
         &:focus {
-            background-color: $hero-btn-border;
+            background-color: $banner-btn-border;
             box-shadow: 0 0 12px rgba(0, 145, 255, 0.4);
             outline: none;
         }
 
         &:active {
-            background-color: $hero-btn-hover;
-            border-color: $hero-btn-hover;
+            background-color: $banner-btn-hover;
+            border-color: $banner-btn-hover;
         }
     }
 }
