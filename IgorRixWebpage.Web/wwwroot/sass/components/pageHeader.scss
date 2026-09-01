@@ -29,7 +29,7 @@ $angle-gray: #c8deffe7;
 .site-header {
     width: 100%;
     background-color: $bg-white;
-    padding: 20px 0 0 0;
+    padding: 0;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 
     position: relative; /* Essential to anchor the pseudo-element triangle */
@@ -58,7 +58,7 @@ $angle-gray: #c8deffe7;
     }
 
 
-    @media screen and (max-width: 1024px) {
+    @media screen and (max-width: 768px) {
         /* Optional: adjust or remove the shape on mobile screens if it crowds text */
         &::before {
             clip-path: polygon(0 60%, 100% 100%, 0 100%);
@@ -72,7 +72,7 @@ $angle-gray: #c8deffe7;
 .header-main-grid {
     width: min(100%, 1200px);
     margin: 0 auto;
-    padding: 15px 20px;
+    padding: 15px 0px;
 
     /* Structural row engine */
     display: flex;
@@ -81,7 +81,7 @@ $angle-gray: #c8deffe7;
     align-items: flex-end;
     /* Locks elements directly onto a uniform baseline */
 
-    @media screen and (max-width: 960px) {
+    @media screen and (max-width: 768px) {
         width: 100%;
         flex-direction: column;
         align-items: center;
@@ -207,24 +207,27 @@ $angle-gray: #c8deffe7;
 /* --- CENTERED NAVBAR LOGIC --- */
 .navbar {
     width: 100%;
-    padding: 15px 20px;
+    padding: 15px 0;
     /* Clear space above links strip */
     background-color: $navbar-bg-dark;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .nav-container {
     width: min(100%, 1200px);
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0;
     display: flex;
     flex-direction: row;
     justify-content: center;
     /* Changed from flex-start to absolute center */
     align-items: center;
 
-    @media screen and (max-width: 820px) {
+    @media screen and (max-width: 768px) {
         width: 100%;
-        padding: 5px 15px;
+        padding: 5px 0px;
     }
 }
 

@@ -1,0 +1,33 @@
+<section class="section-header">
+    <div class="section-header-container">
+
+        <div class="section-header-content">
+            @if (!string.IsNullOrWhiteSpace(Model.Title))
+            {
+                <h1>@Model.Title</h1>
+            }
+
+            @if (!string.IsNullOrWhiteSpace(Model.SubTitle))
+            {
+                <h3>@Model.SubTitle</h3>
+            }
+
+            @if (!string.IsNullOrWhiteSpace(Model.Body))
+            {
+                <div class="section-header-text">
+                    @Html.Raw(Model.Body)
+                </div>
+            }
+        </div>
+
+        @if (!string.IsNullOrWhiteSpace(Model.Image))
+        {
+            <div class="section-header-image">
+                <img src="@Model.Image" alt="@(string.IsNullOrWhiteSpace(Model.ImageAltText)
+                                                 ? Model.Title
+                                                 : Model.ImageAltText)" />
+            </div>
+        }
+
+    </div>
+</section>

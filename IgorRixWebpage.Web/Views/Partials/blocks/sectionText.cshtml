@@ -1,0 +1,28 @@
+<section class="section-text">
+    <div class="section-text-container">
+
+        <div class="section-text-content">
+            @if (!string.IsNullOrWhiteSpace(Model.Title))
+            {
+                <h2>@Model.Title</h2>
+            }
+
+            @if (!string.IsNullOrWhiteSpace(Model.Body))
+            {
+                <div class="section-text-text">
+                    @Html.Raw(Model.Body)
+                </div>
+            }
+        </div>
+
+        @if (!string.IsNullOrWhiteSpace(Model.Image))
+        {
+            <div class="section-text-image">
+                <img src="@Model.Image" alt="@(string.IsNullOrWhiteSpace(Model.ImageAltText)
+                                                 ? Model.Title
+                                                 : Model.ImageAltText)" />
+            </div>
+        }
+
+    </div>
+</section>
