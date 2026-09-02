@@ -1,7 +1,27 @@
-@model IgorRixWebpage.Web.Models.NestedElements.AccordionContainer
+@using System.Text.RegularExpressions
+@using System.Net
+@using Umbraco.Cms.Core.Models.Blocks
+@model IgorRixWebpage.Web.Models.NestedElements.CardComponentContainer
 
-<section class="accordion-section">
-    @* <h2 class="accordion-title">@Model.Title</h2>
+<section class="card-component-section">
+
+    @if (!string.IsNullOrWhiteSpace(Model.Title))
+    {
+        <h2>@Model.Title</h2>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Model.SubTitle))
+    {
+        <h3>@Model.SubTitle</h3>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.Body))
+    {
+        <div class="card-component-body">
+            <p>@Html.Raw(Model.Body)</p>
+        </div>
+    }
+
     <div class="process-wrapper">
         <div class="process-container">
 
@@ -10,7 +30,7 @@
                 <div class="icon-circle icon-understand">
                     <i class="fas fa-search"></i>
                 </div>
-                <h3 class="step-title">Understand.</h3>
+                <h3 class="step-title">Understand</h3>
                 <p class="step-description">
                     Identify barriers and understand their impact on people, functionality and operations.
                 </p>
@@ -29,7 +49,7 @@
                 <div class="icon-circle icon-justify">
                     <i class="fas fa-balance-scale"></i>
                 </div>
-                <h3 class="step-title">Justify.</h3>
+                <h3 class="step-title">Justify</h3>
                 <p class="step-description">
                     Establish why intervention matters and provide the evidence needed to support investment and
                     decisions.
@@ -49,7 +69,7 @@
                 <div class="icon-circle icon-prioritise">
                     <i class="fas fa-clipboard-list"></i>
                 </div>
-                <h3 class="step-title">Prioritise.</h3>
+                <h3 class="step-title">Prioritise</h3>
                 <p class="step-description">
                     Match accessibility requirements with risk, compliance, budgets, resources and planned projects.
                 </p>
@@ -68,40 +88,61 @@
                 <div class="icon-circle icon-act">
                     <i class="fas fa-running"></i>
                 </div>
-                <h3 class="step-title">Act.</h3>
+                <h3 class="step-title">Act</h3>
                 <p class="step-description">
                     Implement practical improvements and monitor their effectiveness over time.
                 </p>
             </div>
 
         </div>
-    </div> *@
-    <div class="accordion-accordion">
+    </div>
+
+    
+    <div class="card-component-grid">
         @foreach (var item in Model.Items)
         {
-            <div class="accordion-item">
-                <button class="accordion-header" type="button">
-                    <span><h3>@item.Title</h3></span>
-                    <span class="accordion-icon">+</span>
-                </button>
+            <div class="card-component-card">
+                @if (!string.IsNullOrWhiteSpace(item.Title))
+                {
+                    <h3>@item.Title</h3>
+                }
+                @*
+                @if (!string.IsNullOrWhiteSpace(item.SubTitle))
+                {
+                    <h3>@item.SubTitle</h3>
+                } *@
 
-                <div class="accordion-content">
-                    <div class="accordion-content-inner">
-                        @Html.Raw(item.Body)
-                    </div>
-                </div>
+                
+
+                @* <a href="@article.ArticleUrl">
+                    @if (!string.IsNullOrWhiteSpace(article.ArticleImage))
+                    {
+                        <img src="@article.ArticleImage" alt="@article.ArticleImageAltText" />
+                    }
+                </a> *@
+
+                @* @{
+                    var bodyHtml = item.Body?.ToString() ?? "";
+
+                    var bodyText = WebUtility.HtmlDecode(
+                        Regex.Replace(bodyHtml, "<.*?>", string.Empty)
+                    );
+
+                    bodyText = bodyText.Trim();
+
+                    var excerpt = bodyText.Length > 100
+                        ? bodyText.Substring(0, 100) + "..."
+                        : bodyText;
+                } *@
+
+                
+                @* <p><i>Author:</i>@article.articleName</p> *@
+                @* <p>@excerpt</p>
+                <a href="@item.ArticleUrl" class="card-component-read-more">
+                    Read Article →
+                </a> *@
+
             </div>
         }
     </div>
 </section>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        document.querySelectorAll(".accordion-header").forEach(button => {
-            button.addEventListener("click", function () {
-                const item = this.closest(".accordion-item");
-                item.classList.toggle("active");
-            });
-        });
-    });
-</script>

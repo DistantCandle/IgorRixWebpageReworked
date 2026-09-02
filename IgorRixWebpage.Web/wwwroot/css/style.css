@@ -36,6 +36,9 @@
   clip-path: polygon(0 50%, 65% 100%, 0 100%);
 }
 @media screen and (max-width: 768px) {
+  .site-header {
+    /* Optional: adjust or remove the shape on mobile screens if it crowds text */
+  }
   .site-header::before {
     clip-path: polygon(0 60%, 100% 100%, 0 100%);
   }
@@ -832,6 +835,12 @@
   color: #222222;
   transition: background 0.3s ease;
 }
+.accordion-header h2 {
+  margin: 0 auto;
+  text-align: center;
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
 .accordion-header:hover {
   background: #0076cf;
 }
@@ -882,6 +891,153 @@
   }
 }
 
+.card-component-section {
+  position: relative;
+  width: 80%;
+  padding: 15px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  font-family: Arial, "Roboto Slab", Helvetica, sans-serif;
+}
+.card-component-section h1 {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-weight: 700;
+}
+.card-component-section h2 {
+  text-align: center;
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+.card-component-section h3 {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-weight: 500;
+  text-align: center;
+}
+.card-component-section .card-component-body {
+  font-size: clamp(16px, 2vw, 18px);
+  line-height: 1.7;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin: 0 auto;
+  gap: 12px;
+  max-width: 75%;
+  width: 100%;
+}
+.card-component-section .card-component-body p {
+  padding: 0;
+  margin: 0;
+  line-height: 1.6;
+  font-size: min(16px, 1.25rem, 18px);
+}
+.card-component-section .card-component-grid {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 100%));
+  gap: 30px;
+}
+.card-component-section .card-component-grid .card-component-card {
+  background: linear-gradient(180deg, #ffffff, #77c4ff);
+  border: 1px solid #e0e0e0;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 220px;
+  max-width: 90vw;
+  padding: 70px 1.2rem 1.2rem;
+  transition: transform 0.2s ease;
+  /* FIX: hover should target card */
+}
+.card-component-section .card-component-grid .card-component-card:hover {
+  transform: translateY(-4px);
+}
+.card-component-section .card-component-grid .card-component-card a {
+  color: black;
+  text-decoration: none;
+}
+.card-component-section .card-component-grid .card-component-card a:hover {
+  color: #4ca1af;
+}
+
+.process-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+  font-family: Arial, sans-serif;
+}
+.process-wrapper .process-container {
+  width: 75%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.process-wrapper .process-step {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.process-wrapper .process-step .icon-circle {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 2.2rem;
+  border: 2px solid #333333;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.process-wrapper .process-step .icon-circle.icon-understand {
+  background-color: #004B93;
+}
+.process-wrapper .process-step .icon-circle.icon-justify {
+  background-color: #C45F0F;
+}
+.process-wrapper .process-step .icon-circle.icon-prioritise {
+  background-color: #1E6B1E;
+}
+.process-wrapper .process-step .icon-circle.icon-act {
+  background-color: #B80000;
+}
+.process-wrapper .process-step .step-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #004B93;
+  margin: 0 0 15px 0;
+}
+.process-wrapper .process-step .step-description {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: #444444;
+  margin: 0;
+}
+.process-wrapper .process-arrow {
+  width: 6%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90px;
+  color: #004B93;
+}
+.process-wrapper .process-arrow svg {
+  width: 100%;
+  max-width: 32px;
+  height: auto;
+}
+
+@media (max-width: 992px) {
+  .process-wrapper .process-container {
+    width: 90%;
+  }
+}
 /* ========================================================
    BRAND VARIABLES & THEMING
    ======================================================== */

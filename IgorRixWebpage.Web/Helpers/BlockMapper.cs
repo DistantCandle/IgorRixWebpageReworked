@@ -55,6 +55,7 @@ namespace IgorRixWebpage.Web.Helpers
                 "sectionHeader" => (object?)MapSectionHeaderBlock(block),
                 "sectionText" => (object?)MapSectionTextBlock(block),
                 "accordionContainer" => (object?)MapAccordionContainerBlock(block),
+                "cardComponentContainer" => (object?)MapCardComponentContainerBlock(block),
                 _ => null
             })
             .Where(b => b != null)
@@ -169,6 +170,52 @@ namespace IgorRixWebpage.Web.Helpers
                 Title = content.Value<string>(_publishedValueFallback, "title") ?? string.Empty,
                 Body = content.Value<string>(_publishedValueFallback, "body") ?? string.Empty,
 
+            };
+            return item;
+        }
+
+        // Card Component Container Block Method
+        public CardComponentContainer? MapCardComponentContainerBlock(BlockListItem block)
+        {
+            if (block == null || block.Content == null)
+            {
+                return null;
+            }
+
+            var content = block.Content;
+            // var media = content.Value<MediaWithCrops>(_publishedValueFallback, "image");
+
+            var container = new CardComponentContainer
+            {
+                Title = content.Value<string>(_publishedValueFallback, "title") ?? string.Empty,
+                SubTitle = content.Value<string>(_publishedValueFallback, "subTitle") ?? string.Empty,
+                Body = content.Value<string>(_publishedValueFallback, "body") ?? string.Empty,
+                Items = content.Value<IEnumerable<BlockListItem>>(_publishedValueFallback, "items")?
+                    .Select(MapCardComponentItemBlock)
+                    .Where(item => item != null)
+                    .Cast<CardComponentItem>()
+                    .ToList()
+            };
+            return container;
+        }
+
+        // Card Component Item Block Method
+        public CardComponentItem? MapCardComponentItemBlock(BlockListItem block)
+        {
+            if (block == null || block.Content == null)
+            {
+                return null;
+            }
+
+            var content = block.Content;
+            // var media = content.Value<MediaWithCrops>(_publishedValueFallback, "image");
+
+            var item = new CardComponentItem
+            {
+                Title = content.Value<string>(_publishedValueFallback, "title") ?? string.Empty,
+                SubTitle = content.Value<string>(_publishedValueFallback, "subTitle") ?? string.Empty,
+                Summary = content.Value<string>(_publishedValueFallback, "summary") ?? string.Empty,
+                Body = content.Value<string>(_publishedValueFallback, "body") ?? string.Empty,
             };
             return item;
         }

@@ -80,6 +80,14 @@ $accordion-shadow: rgba(0, 0, 0, 0.05);
     color: $accordion-text-dark;
     transition: background 0.3s ease;
 
+    h2 {
+        margin: 0 auto;
+        text-align: center;
+        font-weight: 700;
+        font-size: clamp(1.5rem, 3vw, 2rem);
+    }
+
+
     &:hover {
         background: $accordion-dropdown-hover;
     }
