@@ -2,7 +2,7 @@
 $banner-fallback-bg: #062033; // Added brand-specific dark blue fallback color
 $banner-overlay-color: rgba(6, 32, 51, 0.45);
 $banner-text-color: #ffffff;
-$banner-font-family:  Arial, 'Roboto Slab', Helvetica, sans-serif;
+$banner-font-family: Arial, 'Roboto Slab', Helvetica, sans-serif;
 $banner-btn-border: #0091ff;
 $banner-btn-hover: #0076cf;
 
@@ -95,13 +95,15 @@ $banner-btn-hover: #0076cf;
     }
 
     &__button {
-        display: inline-block;
+        position: absolute;
+        bottom: 20px;
+        right: 20%;
         padding: 10px 38px;
         font-size: 0.95rem;
         font-weight: 600;
         color: $banner-text-color;
         text-decoration: none;
-        background-color: transparent;
+        background-color: $banner-btn-border;
         border: 2px solid $banner-btn-border;
         border-radius: 4px;
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);

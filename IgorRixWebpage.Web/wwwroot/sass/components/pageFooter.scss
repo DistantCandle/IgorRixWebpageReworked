@@ -26,7 +26,13 @@ $footer-accent-blue: #38bdf8;   // Vibrant electric blue accent for link hover s
     justify-content: space-between;
     align-items: flex-start;
 
-    @media screen and (max-width: 650px) {
+    @media screen and (max-width: 1440px) {
+        width: min(100%, 90%);
+        margin: 0 auto;
+        padding: 15px 0px;
+    }
+
+    @media screen and (max-width: 425px) {
         flex-direction: column;
         gap: 30px;
         align-items: flex-start; /* Keeps alignment clean left on mobile */

@@ -54,6 +54,7 @@ namespace IgorRixWebpage.Web.Helpers
                 "pageBanner" => (object?)MapPageBannerBlock(block),
                 "sectionHeader" => (object?)MapSectionHeaderBlock(block),
                 "sectionText" => (object?)MapSectionTextBlock(block),
+                "accordionContainer" => (object?)MapAccordionContainerBlock(block),
                 _ => null
             })
             .Where(b => b != null)
@@ -120,12 +121,56 @@ namespace IgorRixWebpage.Web.Helpers
             var container = new SectionText
             {
                 Title = content.Value<string>(_publishedValueFallback, "title") ?? string.Empty,
+                SubTitle = content.Value<string>(_publishedValueFallback, "subTitle") ?? string.Empty,
                 Body = content.Value<string>(_publishedValueFallback, "body") ?? string.Empty,
                 Image = media?.MediaUrl(_publishedUrlProvider),
                 ImageAltText = content.Value<string>(_publishedValueFallback, "imageAltText") ?? string.Empty,
             };
 
             return container;
+        }
+
+        // Accordion Container Block Method
+        public AccordionContainer? MapAccordionContainerBlock(BlockListItem block)
+        {
+            if (block == null || block.Content == null)
+            {
+                return null;
+            }
+
+            var content = block.Content;
+            // var media = content.Value<MediaWithCrops>(_publishedValueFallback, "image");
+
+            var container = new AccordionContainer
+            {
+                Title = content.Value<string>(_publishedValueFallback, "title") ?? string.Empty,
+                Items = content.Value<IEnumerable<BlockListItem>>(_publishedValueFallback, "items")?
+                    .Select(MapAccordionItemBlock)
+                    .Where(item => item != null)
+                    .Cast<AccordionItem>()
+                    .ToList()
+            };
+            return container;
+        }
+
+        // Accordion Item Block Method
+        public AccordionItem? MapAccordionItemBlock(BlockListItem block)
+        {
+            if (block == null || block.Content == null)
+            {
+                return null;
+            }
+
+            var content = block.Content;
+            // var media = content.Value<MediaWithCrops>(_publishedValueFallback, "image");
+
+            var item = new AccordionItem
+            {
+                Title = content.Value<string>(_publishedValueFallback, "title") ?? string.Empty,
+                Body = content.Value<string>(_publishedValueFallback, "body") ?? string.Empty,
+
+            };
+            return item;
         }
     }
 }

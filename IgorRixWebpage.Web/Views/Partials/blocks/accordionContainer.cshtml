@@ -1,0 +1,33 @@
+@model IgorRixWebpage.Web.Models.NestedElements.AccordionContainer
+
+<section class="accordion-section">
+    <h2 class="accordion-title">@Model.Title</h2>
+    <div class="accordion-accordion">
+        @foreach (var item in Model.Items)
+        {
+            <div class="accordion-item">
+                <button class="accordion-header" type="button">
+                    <span>@item.Title</span>
+                    <span class="accordion-icon">+</span>
+                </button>
+
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        @Html.Raw(item.Body)
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".accordion-header").forEach(button => {
+            button.addEventListener("click", function () {
+                const item = this.closest(".accordion-item");
+                item.classList.toggle("active");
+            });
+        });
+    });
+</script>

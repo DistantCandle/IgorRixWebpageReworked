@@ -2,6 +2,7 @@
 @use "components/pageFooter.scss";
 @use "components/pageBanner.scss";
 @use "components/section.scss";
+@use "components/accordionContainer.scss";
 
 /* ========================================================
    BRAND VARIABLES & THEMING
@@ -14,6 +15,31 @@ $logo-blue-brand: #003fa8;
 /* Theme adjustments */
 $bg-white: #ffffff;
 $nav-black: #000000;
+$nav-white: #ffffff;
+$navbar-bg-dark: #002463;
+
+/* New Theme Colors for Screenshot Alignment */
+$screenshot-bg-gray: #f2f4f7;
+$screenshot-dark-text: #3a3a3a;
+$screenshot-light-text: #666666;
+$screenshot-icon-bg: #404040;
+$screenshot-phone-blue: #0076c0;
+
+/* New geometric theme colors */
+$angle-gray: #c8deffe7;
+
+$footer-bg-dark: #111827;       // Deep dark slate for layout distinction
+$footer-bg-bottom: #0b0f19;     // Darker sub-bar tone for copyright block
+$footer-text-white: #ffffff;
+$footer-text-muted: #9ca3af;    // Soft gray text variable for headings and meta
+$footer-accent-blue: #38bdf8;
+
+$banner-fallback-bg: #062033; // Added brand-specific dark blue fallback color
+$banner-overlay-color: rgba(6, 32, 51, 0.45);
+$banner-text-color: #ffffff;
+$banner-font-family: Arial, 'Roboto Slab', Helvetica, sans-serif;
+$banner-btn-border: #0091ff;
+$banner-btn-hover: #0076cf;
 
 /* ========================================================
    GLOBAL STYLES

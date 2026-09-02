@@ -9,7 +9,8 @@ $nav-white: #ffffff;
 .section-header {
     position: relative;
     width: 100%;
-    padding: 15px 0;
+    padding: 30px 0;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -34,16 +35,15 @@ $nav-white: #ffffff;
         opacity: 0.9;
     }
 
-
-
     .section-header-container {
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 40px;
+        max-width: 75%;
 
         .section-header-content {
-            max-width: 100%;
+            width: 100%;
         }
     }
 
@@ -106,18 +106,17 @@ $nav-white: #ffffff;
     padding: 15px 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
     background-color: $bg-white;
 
     h1 {
         font-size: clamp(2.2rem, 5vw, 3rem);
-        margin: auto;
+        margin: 0 0 1rem 0; /* Changed from auto to prevent horizontal centering */
         font-weight: 700;
     }
 
     h2 {
         font-size: clamp(2.2rem, 3vw, 3rem);
-        margin: auto;
+        margin: 0 0 1rem 0; /* Changed from auto to prevent horizontal centering */
         font-weight: 600;
     }
 
@@ -131,13 +130,15 @@ $nav-white: #ffffff;
     .section-text-container {
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start; /* Fixed invalid 'left' value to 'flex-start' */
+        justify-content: flex-start;
         margin: 0 auto;
         gap: 40px;
         max-width: 75%;
+        width: 100%; /* Ensures container spans full max-width footprint */
 
         .section-text-content {
-            max-width: 100%;
+            width: 100%; /* Changed from max-width to width to fill space cleanly */
         }
     }
 
@@ -145,9 +146,8 @@ $nav-white: #ffffff;
         max-width: 100%;
         display: block;
         position: relative;
-        align-items: stretch;   /* Forces the image block to match the text height */
 
-        ::after {
+        &::after { /* Fixed missing ampersand syntax for pseudo-element */
             content: "";
             display: table;
             clear: both;
@@ -157,7 +157,6 @@ $nav-white: #ffffff;
     .section-text-body {
         font-size: clamp(16px, 2vw, 18px);
         line-height: 1.7;
-        flex: 1;                /* Takes up all remaining horizontal space */
 
         p {
             margin-bottom: 1.5rem;
@@ -167,36 +166,32 @@ $nav-white: #ffffff;
 
     .section-text-image {
         float: right;
-        // width: 32%;
         height: auto;
-        /* Fits the proportions in your mockup */
-        max-width: 32%;;
+        max-width: min(400px, 40%);
         margin-left: 30px;
-        /* Spacing between text and image */
-        
 
         img {
             width: 100%;
             height: 100%;
             display: block;
         }
+
     }
 
-
-    @media (max-width: 1200px) {
+    @media (max-width: 1024px) {
         .section-text-container {
             flex-direction: column;
-            align-items: center;
-            text-align: center;
+            align-items: flex-start; /* Kept left-aligned on mobile layout shift */
+            text-align: left;        /* Kept text left-aligned instead of centered */
             gap: 40px;
         }
 
-        .section-text-content {
-            max-width: 100%;
-        }
-
         .section-text-image {
-            width: min(400px, 90vw);
+            float: right;
+        height: auto;
+            margin-left: 20px;
+            width: min(400px, 40%);
+            max-width: 100%;
         }
     }
 
@@ -206,7 +201,10 @@ $nav-white: #ffffff;
         }
 
         .section-text-image {
-            width: min(300px, 90vw);
+            display: none;
+            float: right;
+            height: auto;
+            width: min(300px, 30%);
         }
     }
 
@@ -216,7 +214,10 @@ $nav-white: #ffffff;
         }
 
         .section-text-image {
-            width: min(250px, 90vw);
+            display: none;
+            float: right;
+            height: auto;
+            width: min(250px, 25%);
         }
     }
 }

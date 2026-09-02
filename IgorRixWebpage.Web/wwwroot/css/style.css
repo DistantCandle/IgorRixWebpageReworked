@@ -12,7 +12,7 @@
   background-color: #ffffff;
   padding: 0;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  position: relative; /* Essential to anchor the pseudo-element triangle */
+  position: relative;
   background-color: #ffffff;
   z-index: 1;
   /* --- Geometric Triangle Background --- */
@@ -25,7 +25,8 @@
   width: 100%;
   height: 100%;
   background-color: rgba(200, 222, 255, 0.9058823529);
-  z-index: -1; /* Keeps the shape behind your text and logo elements */
+  z-index: -1;
+  /* Keeps the shape behind your text and logo elements */
   /* 
      Polygon Coordinates Map:
      1st point (0 50%): Left edge (0% width), halfway down (50% height)
@@ -35,9 +36,6 @@
   clip-path: polygon(0 50%, 65% 100%, 0 100%);
 }
 @media screen and (max-width: 768px) {
-  .site-header {
-    /* Optional: adjust or remove the shape on mobile screens if it crowds text */
-  }
   .site-header::before {
     clip-path: polygon(0 60%, 100% 100%, 0 100%);
   }
@@ -56,6 +54,13 @@
   justify-content: space-between;
   align-items: flex-end;
   /* Locks elements directly onto a uniform baseline */
+}
+@media screen and (max-width: 1440px) {
+  .header-main-grid {
+    width: 90%;
+    margin: 0 auto;
+    padding: 15px 0px;
+  }
 }
 @media screen and (max-width: 768px) {
   .header-main-grid {
@@ -339,7 +344,14 @@
   justify-content: space-between;
   align-items: flex-start;
 }
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 1440px) {
+  .footer-container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 15px 0px;
+  }
+}
+@media screen and (max-width: 425px) {
   .footer-container {
     flex-direction: column;
     gap: 30px;
@@ -547,13 +559,15 @@
   }
 }
 .page-banner__button {
-  display: inline-block;
+  position: absolute;
+  bottom: 20px;
+  right: 20%;
   padding: 10px 38px;
   font-size: 0.95rem;
   font-weight: 600;
   color: #ffffff;
   text-decoration: none;
-  background-color: transparent;
+  background-color: #0091ff;
   border: 2px solid #0091ff;
   border-radius: 4px;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
@@ -573,7 +587,8 @@
 .section-header {
   position: relative;
   width: 100%;
-  padding: 15px 0;
+  padding: 30px 0;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -600,9 +615,10 @@
   flex-direction: column;
   align-items: center;
   gap: 40px;
+  max-width: 75%;
 }
 .section-header .section-header-container .section-header-content {
-  max-width: 100%;
+  width: 100%;
 }
 .section-header .section-header-body {
   font-size: clamp(16px, 2vw, 18px);
@@ -653,17 +669,16 @@
   padding: 15px 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
   background-color: #ffffff;
 }
 .section-text h1 {
   font-size: clamp(2.2rem, 5vw, 3rem);
-  margin: auto;
+  margin: 0 0 1rem 0; /* Changed from auto to prevent horizontal centering */
   font-weight: 700;
 }
 .section-text h2 {
   font-size: clamp(2.2rem, 3vw, 3rem);
-  margin: auto;
+  margin: 0 0 1rem 0; /* Changed from auto to prevent horizontal centering */
   font-weight: 600;
 }
 .section-text h3 {
@@ -675,21 +690,22 @@
 .section-text .section-text-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start; /* Fixed invalid 'left' value to 'flex-start' */
+  justify-content: flex-start;
   margin: 0 auto;
   gap: 40px;
   max-width: 75%;
+  width: 100%; /* Ensures container spans full max-width footprint */
 }
 .section-text .section-text-container .section-text-content {
-  max-width: 100%;
+  width: 100%; /* Changed from max-width to width to fill space cleanly */
 }
 .section-text .section-text-body-wrapper {
   max-width: 100%;
   display: block;
   position: relative;
-  align-items: stretch; /* Forces the image block to match the text height */
 }
-.section-text .section-text-body-wrapper ::after {
+.section-text .section-text-body-wrapper::after { /* Fixed missing ampersand syntax for pseudo-element */
   content: "";
   display: table;
   clear: both;
@@ -697,7 +713,6 @@
 .section-text .section-text-body {
   font-size: clamp(16px, 2vw, 18px);
   line-height: 1.7;
-  flex: 1; /* Takes up all remaining horizontal space */
 }
 .section-text .section-text-body p {
   margin-bottom: 1.5rem;
@@ -706,28 +721,27 @@
 .section-text .section-text-image {
   float: right;
   height: auto;
-  /* Fits the proportions in your mockup */
-  max-width: 32%;
+  max-width: min(400px, 40%);
   margin-left: 30px;
-  /* Spacing between text and image */
 }
 .section-text .section-text-image img {
   width: 100%;
   height: 100%;
   display: block;
 }
-@media (max-width: 1200px) {
+@media (max-width: 1024px) {
   .section-text .section-text-container {
     flex-direction: column;
-    align-items: center;
-    text-align: center;
+    align-items: flex-start; /* Kept left-aligned on mobile layout shift */
+    text-align: left; /* Kept text left-aligned instead of centered */
     gap: 40px;
   }
-  .section-text .section-text-content {
-    max-width: 100%;
-  }
   .section-text .section-text-image {
-    width: min(400px, 90vw);
+    float: right;
+    height: auto;
+    margin-left: 20px;
+    width: min(400px, 40%);
+    max-width: 100%;
   }
 }
 @media (max-width: 768px) {
@@ -735,7 +749,10 @@
     gap: 30px;
   }
   .section-text .section-text-image {
-    width: min(300px, 90vw);
+    display: none;
+    float: right;
+    height: auto;
+    width: min(300px, 30%);
   }
 }
 @media (max-width: 480px) {
@@ -743,7 +760,125 @@
     gap: 20px;
   }
   .section-text .section-text-image {
-    width: min(250px, 90vw);
+    display: none;
+    float: right;
+    height: auto;
+    width: min(250px, 25%);
+  }
+}
+
+.accordion-section {
+  padding: 60px 20px;
+  background: #ffffff;
+}
+@media (max-width: 768px) {
+  .accordion-section {
+    margin: 20px 10px;
+    padding: 30px 16px;
+  }
+}
+
+.accordion-title {
+  margin-bottom: 40px;
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  color: #222222;
+}
+@media (max-width: 768px) {
+  .accordion-title {
+    font-size: 26px;
+    margin-bottom: 24px;
+  }
+}
+@media (max-width: 480px) {
+  .accordion-title {
+    font-size: 22px;
+  }
+}
+
+.accordion-accordion {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.accordion-item {
+  margin-bottom: 12px;
+  background: #fff1cc;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+.accordion-item.active .accordion-icon {
+  transform: rotate(45deg);
+}
+.accordion-item.active .accordion-content {
+  display: block;
+}
+
+.accordion-header {
+  width: 100%;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  background: #77c4ff;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 600;
+  color: #222222;
+  transition: background 0.3s ease;
+}
+.accordion-header:hover {
+  background: #0076cf;
+}
+@media (max-width: 768px) {
+  .accordion-header {
+    padding: 16px;
+    font-size: 15px;
+  }
+}
+@media (max-width: 480px) {
+  .accordion-header {
+    padding: 14px;
+    font-size: 14px;
+  }
+}
+
+.accordion-icon {
+  flex-shrink: 0;
+  font-size: 20px;
+  font-weight: 400;
+  transition: transform 0.3s ease;
+}
+@media (max-width: 480px) {
+  .accordion-icon {
+    font-size: 18px;
+  }
+}
+
+.accordion-content {
+  display: none;
+}
+
+.accordion-content-inner {
+  padding: 6px 24px 20px;
+  color: #333333;
+  line-height: 1.7;
+}
+@media (max-width: 768px) {
+  .accordion-content-inner {
+    padding: 6px 16px 16px;
+    font-size: 15px;
+  }
+}
+@media (max-width: 480px) {
+  .accordion-content-inner {
+    font-size: 14px;
+    line-height: 1.6;
   }
 }
 
@@ -751,6 +886,8 @@
    BRAND VARIABLES & THEMING
    ======================================================== */
 /* Theme adjustments */
+/* New Theme Colors for Screenshot Alignment */
+/* New geometric theme colors */
 /* ========================================================
    GLOBAL STYLES
    ======================================================== */
