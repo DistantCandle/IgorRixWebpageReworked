@@ -4,7 +4,6 @@
 @model IgorRixWebpage.Web.Models.NestedElements.CardComponentContainer
 
 <section class="card-component-section">
-
     @if (!string.IsNullOrWhiteSpace(Model.Title))
     {
         <h2>@Model.Title</h2>
@@ -151,11 +150,13 @@
                     <div class="flip-card-component-card-back">
                         @if (!string.IsNullOrWhiteSpace(item.Body))
                         {
-                            <p>@Html.Raw(item.Body)</p>
+                            <p>@Html.Raw(item.Summary)</p>
                         }
                     </div>
                 </div>
             </div>
         }
     </div>
+    
 </section>
+

@@ -2,15 +2,17 @@ $font-family: Arial, 'Roboto Slab', Helvetica, sans-serif;
 $card-bg-color: #77c4ff;
 $card-border-color: #e0e0e0;
 
-$card-width: 300px;
+$card-width: 100%; // Allowed to flex fluidly within parent grid cells
+$card-max-width: 320px;
 $card-height: 200px;
 $card-radius: 10px;
-$transition-speed: 0.6s;
+$transition-speed: 0.4s;
 
-$color-front-start: #667eea;
-$color-front-end: #764ba2;
+$color-front-start: #e0e0e0;
+$color-front-end: #77c4ff;
 $color-back-bg: #2d3748;
-$color-text: #ffffff;
+$color-text-front: #000000;
+$color-text-back: #ffffff;
 
 $color-understand: #004B93;
 $color-justify: #C45F0F;
@@ -27,7 +29,7 @@ $text-muted: #444444;
 
 .card-component-section {
     position: relative;
-    width: 80%;
+    width: 75%;
     padding: 15px 0;
     display: flex;
     flex-direction: column;
@@ -63,7 +65,6 @@ $text-muted: #444444;
         margin: 0 auto;
         gap: 12px;
         max-width: 75%;
-        width: 100%;
 
         p {
             padding: 0;
@@ -73,82 +74,89 @@ $text-muted: #444444;
         }
     }
 
+    /* Grid layout handling cards wrapper */
     .card-component-grid {
         display: flex;
-        flex-direction: row;
-        align-items: center;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 100%));
-        gap: 30px;
-
+        flex-wrap: wrap;
+        /* Allows cards to wrap into a second row */
+        justify-content: center;
+        /* Centers all items inline, including uneven rows */
+        gap: 20px;
+        width: 75%;
+        margin-top: 40px;
 
         .flip-card-component-card {
-            width: $card-width;
+            // Explicitly set flex-basis to control item footprint sizing
+            flex: 0 1 $card-max-width;
+            width: 100%;
             height: $card-height;
-            perspective: 1000px; // Establishes the 3D space
-            padding: 0; // Clear any old padding that collapses the inner height
-            border: none; // Reset parent borders so they don't leak out
-            background: transparent; // Keeps the 3D frame wrapper invisible
+            perspective: 1000px;
+            padding: 0;
+            border: none;
+            background: transparent;
 
-            // FIX 1: Trigger the flip rotation when parent is hovered
             &:hover {
                 .flip-card-component-card-inner {
                     transform: rotateY(180deg);
                 }
             }
 
-            // Inner wrapper holding both faces
             &-inner {
                 position: relative;
                 width: 100%;
                 height: 100%;
                 text-align: center;
                 transition: transform $transition-speed ease-in-out;
-                transform-style: preserve-3d; // Keeps elements in 3D layers
+                transform-style: preserve-3d;
             }
 
-            // Shared properties for Front and Back sides
             &-front,
             &-back {
-                 @include flex-center; 
+                @include flex-center;
                 position: absolute;
                 top: 0;
                 left: 0;
                 width: 100%;
                 height: 100%;
-                padding: 20px; // Padding belongs inside the faces, not on the parent frame
+                padding: 24px;
                 box-sizing: border-box;
                 border-radius: $card-radius;
-                backface-visibility: hidden; 
-                -webkit-backface-visibility: hidden; 
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             }
 
-            // FIX 2: Restructured your styling so background/borders move to individual faces
             &-front {
-                // background: linear-gradient(180deg, #ffffff, $card-bg-color);
-                border: 1px solid $card-border-color;
-                // color: initial; // Keeps text readable against the white/blue gradient
-
-                // If you prefer the purple/blue default template card theme instead, use this:
                 background: linear-gradient(135deg, $color-front-start 0%, $color-front-end 100%);
-                color: $color-text;
-                z-index: 2; 
+                color: $color-text-front;
+                z-index: 2;
+
+                .phase-title {
+                    font-size: 0.85rem;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                    opacity: 0.85;
+                    margin-bottom: 12px;
+                }
+
+                h4 {
+                    font-size: 1.15rem;
+                    margin: 0;
+                    font-weight: 600;
+                    line-height: 1.4;
+                }
             }
 
-            // Back face specific styling
             &-back {
                 background-color: $color-back-bg;
-                transform: rotateY(180deg); // Flipped by default to align with the animation
-                color: $color-text;
-                z-index: 1; 
-            }
+                transform: rotateY(180deg);
+                color: $color-text-back;
+                z-index: 1;
 
-            a {
-                color: black;
-                text-decoration: none;
-
-                &:hover {
-                    color: #1a1eff;
+                p {
+                    font-size: 0.95rem;
+                    line-height: 1.5;
+                    margin: 0;
                 }
             }
         }
@@ -247,8 +255,23 @@ $text-muted: #444444;
     }
 }
 
-// Mobile responsive adaptation (stacked card format below 992px)
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
+    .card-component-section {
+        max-width: 85%; // Drop safety handles marginally wider to breathe comfortably on tablets
+    }
+}
+
+@media (max-width: 768px) {
+    .card-component-section {
+        max-width: 90%; // Maximizes readability space on small displays
+
+        .card-component-grid {
+            grid-template-columns: 1fr; // Cards stack completely straight downward
+        }
+    }
+}
+
+@media (max-width: 768px) {
     .process-wrapper {
         .process-container {
             width: 85%;
@@ -268,4 +291,6 @@ $text-muted: #444444;
             margin: 10px 0;
         }
     }
+
+
 }
