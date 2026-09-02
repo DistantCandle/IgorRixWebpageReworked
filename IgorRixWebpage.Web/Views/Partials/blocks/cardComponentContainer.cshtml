@@ -28,9 +28,16 @@
             <!-- Step 1: Understand -->
             <div class="process-step">
                 <div class="icon-circle icon-understand">
-                    <i class="fas fa-search"></i>
+                    <!-- SVG: Search / Magnifying Glass -->
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://w3.org">
+                        <path
+                        d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                              stroke-linejoin="round" />
+                    </svg>
                 </div>
-                <h3 class="step-title">Understand</h3>
+                <h3 class="step-title">Understand.</h3>
                 <p class="step-description">
                     Identify barriers and understand their impact on people, functionality and operations.
                 </p>
@@ -47,9 +54,19 @@
             <!-- Step 2: Justify -->
             <div class="process-step">
                 <div class="icon-circle icon-justify">
-                    <i class="fas fa-balance-scale"></i>
+                    <!-- SVG: Balance Scales -->
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://w3.org">
+                        <path d="M12 3V21M12 5L3 9M12 5L21 9" stroke="currentColor" stroke-width="2"
+                              stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                        d="M6 17C7.65685 17 9 15.6569 9 14C9 12.3431 7.65685 11 6 11C4.34315 11 3 12.3431 3 14C3 15.6569 4.34315 17 6 17Z"
+                        stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                        <path
+                        d="M18 17C19.6569 17 21 15.6569 21 14C21 12.3431 19.6569 11 18 11C16.3431 11 15 12.3431 15 14C15 15.6569 16.3431 17 18 17Z"
+                        stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                    </svg>
                 </div>
-                <h3 class="step-title">Justify</h3>
+                <h3 class="step-title">Justify.</h3>
                 <p class="step-description">
                     Establish why intervention matters and provide the evidence needed to support investment and
                     decisions.
@@ -67,9 +84,19 @@
             <!-- Step 3: Prioritise -->
             <div class="process-step">
                 <div class="icon-circle icon-prioritise">
-                    <i class="fas fa-clipboard-list"></i>
+                    <!-- SVG: Clipboard List -->
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://w3.org">
+                        <path
+                        d="M16 4H18C19.1046 4 20 4.89543 20 6V20C20 21.1046 19.1046 22 18 22H6C4.89543 22 4 21.1046 4 20V6C4 4.89543 4.89543 4 6 4H8"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        <path
+                        d="M12 2C10.8954 2 10 2.89543 10 4V5C10 5.55228 10.4477 6 11 6H13C13.5523 6 14 5.55228 14 5V4C14 2.89543 13.5523 2 12 2Z"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M9 11H15M9 15H15M9 19H13" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                              stroke-linejoin="round" />
+                    </svg>
                 </div>
-                <h3 class="step-title">Prioritise</h3>
+                <h3 class="step-title">Prioritise.</h3>
                 <p class="step-description">
                     Match accessibility requirements with risk, compliance, budgets, resources and planned projects.
                 </p>
@@ -86,9 +113,18 @@
             <!-- Step 4: Act -->
             <div class="process-step">
                 <div class="icon-circle icon-act">
-                    <i class="fas fa-running"></i>
+                    <!-- SVG: Running / Fast Action -->
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://w3.org">
+                        <circle cx="15" cy="5" r="2" fill="currentColor" />
+                        <path d="M13 9L11.5 13.5L8.5 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                              stroke-linejoin="round" />
+                        <path d="M11 9H7L5 13M12 9L14 12.5L18 11.5" stroke="currentColor" stroke-width="2"
+                              stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M10 16L12 21H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                              stroke-linejoin="round" />
+                    </svg>
                 </div>
-                <h3 class="step-title">Act</h3>
+                <h3 class="step-title">Act.</h3>
                 <p class="step-description">
                     Implement practical improvements and monitor their effectiveness over time.
                 </p>
@@ -97,51 +133,28 @@
         </div>
     </div>
 
-    
     <div class="card-component-grid">
         @foreach (var item in Model.Items)
         {
-            <div class="card-component-card">
-                @if (!string.IsNullOrWhiteSpace(item.Title))
-                {
-                    <h3>@item.Title</h3>
-                }
-                @*
-                @if (!string.IsNullOrWhiteSpace(item.SubTitle))
-                {
-                    <h3>@item.SubTitle</h3>
-                } *@
-
-                
-
-                @* <a href="@article.ArticleUrl">
-                    @if (!string.IsNullOrWhiteSpace(article.ArticleImage))
-                    {
-                        <img src="@article.ArticleImage" alt="@article.ArticleImageAltText" />
-                    }
-                </a> *@
-
-                @* @{
-                    var bodyHtml = item.Body?.ToString() ?? "";
-
-                    var bodyText = WebUtility.HtmlDecode(
-                        Regex.Replace(bodyHtml, "<.*?>", string.Empty)
-                    );
-
-                    bodyText = bodyText.Trim();
-
-                    var excerpt = bodyText.Length > 100
-                        ? bodyText.Substring(0, 100) + "..."
-                        : bodyText;
-                } *@
-
-                
-                @* <p><i>Author:</i>@article.articleName</p> *@
-                @* <p>@excerpt</p>
-                <a href="@item.ArticleUrl" class="card-component-read-more">
-                    Read Article →
-                </a> *@
-
+            <div class="flip-card-component-card">
+                <div class="flip-card-component-card-inner">
+                    <div class="flip-card-component-card-front">
+                        @if (!string.IsNullOrWhiteSpace(item.Title))
+                        {
+                            <h3>@item.Title</h3>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(item.SubTitle))
+                        {
+                            <h4>@item.SubTitle</h4>
+                        }
+                    </div>
+                    <div class="flip-card-component-card-back">
+                        @if (!string.IsNullOrWhiteSpace(item.Body))
+                        {
+                            <p>@Html.Raw(item.Body)</p>
+                        }
+                    </div>
+                </div>
             </div>
         }
     </div>

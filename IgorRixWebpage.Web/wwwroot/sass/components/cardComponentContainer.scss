@@ -2,11 +2,28 @@ $font-family: Arial, 'Roboto Slab', Helvetica, sans-serif;
 $card-bg-color: #77c4ff;
 $card-border-color: #e0e0e0;
 
+$card-width: 300px;
+$card-height: 200px;
+$card-radius: 10px;
+$transition-speed: 0.6s;
+
+$color-front-start: #667eea;
+$color-front-end: #764ba2;
+$color-back-bg: #2d3748;
+$color-text: #ffffff;
+
 $color-understand: #004B93;
 $color-justify: #C45F0F;
 $color-prioritise: #1E6B1E;
 $color-act: #B80000;
 $text-muted: #444444;
+
+@mixin flex-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 .card-component-section {
     position: relative;
@@ -63,22 +80,67 @@ $text-muted: #444444;
         grid-template-columns: repeat(auto-fit, minmax(300px, 100%));
         gap: 30px;
 
-        .card-component-card {
-            background: linear-gradient(180deg, #ffffff, $card-bg-color);
-            border: 1px solid $card-border-color;
-            padding: 1.5rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-            width: 220px;
-            max-width: 90vw;
+        .flip-card-component-card {
+            width: $card-width;
+            height: $card-height;
+            perspective: 1000px; // Establishes the 3D space
+            padding: 0; // Clear any old padding that collapses the inner height
+            border: none; // Reset parent borders so they don't leak out
+            background: transparent; // Keeps the 3D frame wrapper invisible
 
-            padding: 70px 1.2rem 1.2rem;
-
-            transition: transform 0.2s ease;
-
-            /* FIX: hover should target card */
+            // FIX 1: Trigger the flip rotation when parent is hovered
             &:hover {
-                transform: translateY(-4px);
+                .flip-card-component-card-inner {
+                    transform: rotateY(180deg);
+                }
+            }
+
+            // Inner wrapper holding both faces
+            &-inner {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                text-align: center;
+                transition: transform $transition-speed ease-in-out;
+                transform-style: preserve-3d; // Keeps elements in 3D layers
+            }
+
+            // Shared properties for Front and Back sides
+            &-front,
+            &-back {
+                 @include flex-center; 
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                padding: 20px; // Padding belongs inside the faces, not on the parent frame
+                box-sizing: border-box;
+                border-radius: $card-radius;
+                backface-visibility: hidden; 
+                -webkit-backface-visibility: hidden; 
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)
+            }
+
+            // FIX 2: Restructured your styling so background/borders move to individual faces
+            &-front {
+                // background: linear-gradient(180deg, #ffffff, $card-bg-color);
+                border: 1px solid $card-border-color;
+                // color: initial; // Keeps text readable against the white/blue gradient
+
+                // If you prefer the purple/blue default template card theme instead, use this:
+                background: linear-gradient(135deg, $color-front-start 0%, $color-front-end 100%);
+                color: $color-text;
+                z-index: 2; 
+            }
+
+            // Back face specific styling
+            &-back {
+                background-color: $color-back-bg;
+                transform: rotateY(180deg); // Flipped by default to align with the animation
+                color: $color-text;
+                z-index: 1; 
             }
 
             a {
@@ -86,17 +148,12 @@ $text-muted: #444444;
                 text-decoration: none;
 
                 &:hover {
-                    color: #4ca1af;
+                    color: #1a1eff;
                 }
             }
         }
     }
 }
-
-
-
-// SCSS file matching the exact layout and colors from the image
-
 
 .process-wrapper {
     width: 100%;
@@ -106,14 +163,14 @@ $text-muted: #444444;
     font-family: Arial, sans-serif;
 
     .process-container {
-        width: 75%; // Confined to exactly 60% of the page width
+        width: 60%; // Keeps content securely targeted to 60% view width
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
     }
 
     .process-step {
-        width: 20%; // Explicit widths give precise breathing room for the arrows
+        width: 20%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -127,10 +184,20 @@ $text-muted: #444444;
             align-items: center;
             justify-content: center;
             color: #ffffff;
-            font-size: 2.2rem;
             border: 2px solid #333333;
             margin-bottom: 25px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+
+            &:hover {
+                transform: scale(1.05);
+            }
+
+            // Universal clean internal SVG rules sizing inside circles
+            svg {
+                width: 42%;
+                height: 42%;
+            }
 
             &.icon-understand {
                 background-color: $color-understand;
@@ -152,7 +219,7 @@ $text-muted: #444444;
         .step-title {
             font-size: 1.25rem;
             font-weight: bold;
-            color: $color-understand; // All titles match the primary branding blue
+            color: $color-understand;
             margin: 0 0 15px 0;
         }
 
@@ -165,12 +232,12 @@ $text-muted: #444444;
     }
 
     .process-arrow {
-        width: 6%; // Dedicated space between columns
+        width: 6%;
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 90px; // Centers the arrows perfectly alongside the circles
-        color: $color-understand; // True to the original diagram accent color
+        height: 90px; // Aligns inline with center of icon-circles
+        color: $color-understand;
 
         svg {
             width: 100%;
@@ -180,11 +247,25 @@ $text-muted: #444444;
     }
 }
 
-// Simple responsive layout block for tablet views or small screens
+// Mobile responsive adaptation (stacked card format below 992px)
 @media (max-width: 992px) {
     .process-wrapper {
         .process-container {
-            width: 90%; // Expands layout on smaller monitors for cleaner reading
+            width: 85%;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .process-step {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .process-arrow {
+            width: auto;
+            height: auto;
+            transform: rotate(90deg); // Points arrows downward on phone layouts
+            margin: 10px 0;
         }
     }
 }

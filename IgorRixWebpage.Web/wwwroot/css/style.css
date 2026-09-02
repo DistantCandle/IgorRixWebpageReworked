@@ -940,26 +940,60 @@
   grid-template-columns: repeat(auto-fit, minmax(300px, 100%));
   gap: 30px;
 }
-.card-component-section .card-component-grid .card-component-card {
-  background: linear-gradient(180deg, #ffffff, #77c4ff);
+.card-component-section .card-component-grid .flip-card-component-card {
+  width: 300px;
+  height: 200px;
+  perspective: 1000px;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+.card-component-section .card-component-grid .flip-card-component-card:hover .flip-card-component-card-inner {
+  transform: rotateY(180deg);
+}
+.card-component-section .card-component-grid .flip-card-component-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s ease-in-out;
+  transform-style: preserve-3d;
+}
+.card-component-section .card-component-grid .flip-card-component-card-front, .card-component-section .card-component-grid .flip-card-component-card-back {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.card-component-section .card-component-grid .flip-card-component-card-front {
   border: 1px solid #e0e0e0;
-  padding: 1.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 220px;
-  max-width: 90vw;
-  padding: 70px 1.2rem 1.2rem;
-  transition: transform 0.2s ease;
-  /* FIX: hover should target card */
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+  z-index: 2;
 }
-.card-component-section .card-component-grid .card-component-card:hover {
-  transform: translateY(-4px);
+.card-component-section .card-component-grid .flip-card-component-card-back {
+  background-color: #2d3748;
+  transform: rotateY(180deg);
+  color: #ffffff;
+  z-index: 1;
 }
-.card-component-section .card-component-grid .card-component-card a {
+.card-component-section .card-component-grid .flip-card-component-card a {
   color: black;
   text-decoration: none;
 }
-.card-component-section .card-component-grid .card-component-card a:hover {
-  color: #4ca1af;
+.card-component-section .card-component-grid .flip-card-component-card a:hover {
+  color: #1a1eff;
 }
 
 .process-wrapper {
@@ -970,7 +1004,7 @@
   font-family: Arial, sans-serif;
 }
 .process-wrapper .process-container {
-  width: 75%;
+  width: 60%;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -990,10 +1024,17 @@
   align-items: center;
   justify-content: center;
   color: #ffffff;
-  font-size: 2.2rem;
   border: 2px solid #333333;
   margin-bottom: 25px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+.process-wrapper .process-step .icon-circle:hover {
+  transform: scale(1.05);
+}
+.process-wrapper .process-step .icon-circle svg {
+  width: 42%;
+  height: 42%;
 }
 .process-wrapper .process-step .icon-circle.icon-understand {
   background-color: #004B93;
@@ -1035,7 +1076,19 @@
 
 @media (max-width: 992px) {
   .process-wrapper .process-container {
-    width: 90%;
+    width: 85%;
+    flex-direction: column;
+    align-items: center;
+  }
+  .process-wrapper .process-step {
+    width: 100%;
+    margin: 20px 0;
+  }
+  .process-wrapper .process-arrow {
+    width: auto;
+    height: auto;
+    transform: rotate(90deg);
+    margin: 10px 0;
   }
 }
 /* ========================================================
