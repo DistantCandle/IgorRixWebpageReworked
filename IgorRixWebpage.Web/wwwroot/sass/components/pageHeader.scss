@@ -15,6 +15,7 @@ $bg-white: #ffffff;
 $nav-black: #000000;
 $nav-white: #ffffff;
 $navbar-bg-dark: #002463;
+$navbar-bg-hover: #0b3dc5;
 
 /* New Theme Colors for Screenshot Alignment */
 $screenshot-bg-gray: #f2f4f7;
@@ -276,6 +277,74 @@ $angle-gray: #c8deffe7;
         }
     }
 }
+
+
+.nav-dropdown {
+    position: relative;
+
+    .dropdown-toggle {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+
+    .dropdown-arrow {
+        font-size: 0.75rem;
+    }
+
+    .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+
+        width: max-content;
+        min-width: 100%;
+
+        margin: 0;
+        padding: 0.5rem 0;
+
+        list-style: none;
+
+        background: $navbar-bg-dark;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-5px);
+
+        transition:
+            opacity 0.2s ease,
+            transform 0.2s ease,
+            visibility 0.2s ease;
+
+        z-index: 1000;
+
+        li {
+            width: 100%;
+        }
+
+        a {
+            display: block;
+            padding: 0.65rem 1rem;
+            white-space: nowrap;
+
+            &:hover,
+            &:focus {
+                background: $navbar-bg-hover;
+            }
+        }
+    }
+
+    &:hover,
+    &:focus-within {
+        .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+    }
+}
+
 
 /* ========================================================
    PURE CSS REPLICA TEXT LOGO

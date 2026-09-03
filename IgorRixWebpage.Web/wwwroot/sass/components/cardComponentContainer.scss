@@ -95,7 +95,7 @@ $text-muted: #444444;
             border: none;
             background: transparent;
 
-            &:hover {
+            &:hover  {
                 .flip-card-component-card-inner {
                     transform: rotateY(180deg);
                 }
@@ -157,6 +157,14 @@ $text-muted: #444444;
                     font-size: 0.95rem;
                     line-height: 1.5;
                     margin: 0;
+                }
+
+                a{
+                    font-size: 0.95rem;
+                    line-height: 1.5;
+                    margin: 0;
+                    color: $color-text-back;
+                    text-decoration: underline;
                 }
             }
         }

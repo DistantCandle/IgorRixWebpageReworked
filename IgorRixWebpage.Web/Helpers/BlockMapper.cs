@@ -3,6 +3,7 @@ using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Routing;
 using Umbraco.Extensions;
+using IgorRixWebpage.Web.DTO;
 using IgorRixWebpage.Web.Models.NestedElements;
 using IgorRixWebpage.Web.Models.CompositionModels;
 using IgorRixWebpage.Web.Models;
@@ -40,7 +41,9 @@ namespace IgorRixWebpage.Web.Helpers
         }
 
         // Page-level mapper - uncomment when ready to wire up PageContentCompositionModel
-        public PageContentCompositionModel MapPageContent(BlockListModel? blockList)
+        public PageContentCompositionModel MapPageContent(
+            BlockListModel? blockList,
+            IPublishedContent? currentPage = null)
         {
             var model = new PageContentCompositionModel();
             if (blockList == null)
@@ -55,7 +58,8 @@ namespace IgorRixWebpage.Web.Helpers
                 "sectionHeader" => (object?)MapSectionHeaderBlock(block),
                 "sectionText" => (object?)MapSectionTextBlock(block),
                 "accordionContainer" => (object?)MapAccordionContainerBlock(block),
-                "cardComponentContainer" => (object?)MapCardComponentContainerBlock(block),
+                "cardComponentContainer" => (object?)MapCardComponentContainerBlock(block, currentPage),
+                "servicePageInformationContainer" => (object?)MapServicePageInformationContainerBlock(block),
                 _ => null
             })
             .Where(b => b != null)
@@ -175,7 +179,9 @@ namespace IgorRixWebpage.Web.Helpers
         }
 
         // Card Component Container Block Method
-        public CardComponentContainer? MapCardComponentContainerBlock(BlockListItem block)
+        public CardComponentContainer? MapCardComponentContainerBlock(
+            BlockListItem block,
+            IPublishedContent? currentPage = null)
         {
             if (block == null || block.Content == null)
             {
@@ -184,23 +190,134 @@ namespace IgorRixWebpage.Web.Helpers
 
             var content = block.Content;
             // var media = content.Value<MediaWithCrops>(_publishedValueFallback, "image");
+
+            var servicePages = currentPage?.Children()
+                .Where(page => page.ContentType.Alias == "servicePage")
+                .ToList();
+
+            var pickedPages = servicePages?.Count > 0
+                ? servicePages
+                : GetPickedServicePages(content).ToList();
+
+            var cards = pickedPages
+                .Select(MapServiceCardFromPage)
+                .Where(cards => cards != null)
+                .Cast<ServiceCardDto>()
+                .ToList();
+
+            var pages = pickedPages
+                .Select(MapServicePageFromPage)
+                .Where(pages => pages != null)
+                .Cast<ServicePageDto>()
+                .ToList();
 
             var container = new CardComponentContainer
             {
                 Title = content.Value<string>(_publishedValueFallback, "title") ?? string.Empty,
                 SubTitle = content.Value<string>(_publishedValueFallback, "subTitle") ?? string.Empty,
                 Body = content.Value<string>(_publishedValueFallback, "body") ?? string.Empty,
-                Items = content.Value<IEnumerable<BlockListItem>>(_publishedValueFallback, "items")?
-                    .Select(MapCardComponentItemBlock)
-                    .Where(item => item != null)
-                    .Cast<CardComponentItem>()
-                    .ToList()
+                ServiceCards = cards,
+                ServicePages = pages
             };
             return container;
         }
 
-        // Card Component Item Block Method
-        public CardComponentItem? MapCardComponentItemBlock(BlockListItem block)
+        private ServiceCardDto? MapServiceCardFromPage(IPublishedContent page)
+        {
+            if (page == null)
+            {
+                return null;
+            }
+
+              var infoBlock = GetServicePageInformationBlock(page);
+
+            if (infoBlock == null)
+            {
+                return null;
+            }
+
+            return MapServiceCard(infoBlock, page);
+        }
+
+        private ServiceCardDto MapServiceCard(BlockListItem block, IPublishedContent page)
+        {
+            if (block?.Content == null)
+            {
+                return new ServiceCardDto();
+            }
+
+            var content = block.Content;
+
+            return new ServiceCardDto
+            {
+                Title = content.Value<string>(_publishedValueFallback, "title") ?? string.Empty,
+                SubTitle = content.Value<string>(_publishedValueFallback, "subTitle") ?? string.Empty,
+                Summary = content.Value<string>(_publishedValueFallback, "summary") ?? string.Empty,
+                ServiceUrl = page.Url()
+            };
+        }
+
+        private ServicePageDto? MapServicePageFromPage(IPublishedContent page)
+        {
+            if (page == null)
+            {
+                return null;
+            }
+
+              var infoBlock = GetServicePageInformationBlock(page);
+
+            if (infoBlock == null)
+            {
+                return null;
+            }
+
+            return MapServicePage(infoBlock, page);
+        }
+
+        private ServicePageDto MapServicePage(BlockListItem block, IPublishedContent page)
+        {
+            if (block?.Content == null)
+            {
+                return new ServicePageDto();
+            }
+
+            var content = block.Content;
+
+            return new ServicePageDto
+            {
+                Title = content.Value<string>(_publishedValueFallback, "title") ?? string.Empty,
+                SubTitle = content.Value<string>(_publishedValueFallback, "subTitle") ?? string.Empty,
+                Body = content.Value<string>(_publishedValueFallback, "body") ?? string.Empty
+            };
+        }
+
+        private IEnumerable<IPublishedContent> GetPickedServicePages(IPublishedElement content)
+        {
+            var multiplePages = content.Value<IEnumerable<IPublishedContent>>(
+                _publishedValueFallback, "contentPicker");
+
+            if (multiplePages != null)
+            {
+                return multiplePages;
+            }
+
+            var singlePage = content.Value<IPublishedContent>(
+                _publishedValueFallback, "contentPicker");
+
+            return singlePage == null
+                ? Enumerable.Empty<IPublishedContent>()
+                : new[] { singlePage };
+        }
+
+        private BlockListItem? GetServicePageInformationBlock(IPublishedContent page)
+        {
+            var blocks = page.Value<BlockListModel>(_publishedValueFallback, "content");
+
+            return blocks?.FirstOrDefault(block =>
+                block.Content?.ContentType.Alias == "servicePageInformationContainer");
+        }
+
+        public ServicePageInformationContainer? MapServicePageInformationContainerBlock(BlockListItem block)
         {
             if (block == null || block.Content == null)
             {
@@ -208,16 +325,18 @@ namespace IgorRixWebpage.Web.Helpers
             }
 
             var content = block.Content;
-            // var media = content.Value<MediaWithCrops>(_publishedValueFallback, "image");
+            var articleImage = content.Value<MediaWithCrops>(_publishedValueFallback, "articleImage");
+            var authorImage = content.Value<MediaWithCrops>(_publishedValueFallback, "authorImage");
 
-            var item = new CardComponentItem
+            var container = new ServicePageInformationContainer
             {
                 Title = content.Value<string>(_publishedValueFallback, "title") ?? string.Empty,
                 SubTitle = content.Value<string>(_publishedValueFallback, "subTitle") ?? string.Empty,
-                Summary = content.Value<string>(_publishedValueFallback, "summary") ?? string.Empty,
                 Body = content.Value<string>(_publishedValueFallback, "body") ?? string.Empty,
+                Image = articleImage?.MediaUrl(_publishedUrlProvider),
+                ImageAltText = content.Value<string>(_publishedValueFallback, "imageAltText") ?? string.Empty,
             };
-            return item;
+            return container;
         }
     }
 }

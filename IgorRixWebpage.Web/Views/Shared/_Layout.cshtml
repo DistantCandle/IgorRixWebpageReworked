@@ -1,3 +1,5 @@
+@using Umbraco.Cms.Core.Web
+@inject IUmbracoContextAccessor UmbracoContextAccessor
 @model IgorRixWebpage.Web.Models.ViewModels.BasePageViewModel
 
 <!DOCTYPE html>
@@ -63,12 +65,61 @@
         </div>
 
         <!-- Secondary Navigation Strip -->
+        @{
+            var currentPage = UmbracoContextAccessor
+                .GetRequiredUmbracoContext()
+                .PublishedRequest
+                ?.PublishedContent;
+
+            var rootPage = currentPage?.Root();
+
+            var servicesPage = rootPage?
+                .Children()
+                .FirstOrDefault(x => x.Url().TrimEnd('/') == "/services");
+
+            var serviceChildren = servicesPage?
+                .Children()
+                .Where(x => x.IsVisible())
+                .ToList();
+        }
+
         <nav class="navbar">
             <div class="nav-container">
                 <ul class="nav-links">
-                    <li><a href="@Url.Content("~/")">Home</a></li>
-                    <li><a href="@Url.Content("~/about-us")">About Us</a></li>
-                    <li><a href="@Url.Content("~/services")">Services</a></li>
+
+                    <li>
+                        <a href="@Url.Content("~/")">Home</a>
+                    </li>
+
+                    <li>
+                        <a href="@Url.Content("~/about-us")">About Us</a>
+                    </li>
+
+                    <li class="nav-dropdown">
+                        <a href="@Url.Content("~/services")" class="dropdown-toggle">
+                            Services
+
+                            @if (serviceChildren?.Any() == true)
+                            {
+                                <span class="dropdown-arrow">▾</span>
+                            }
+                        </a>
+
+                        @if (serviceChildren?.Any() == true)
+                        {
+                            <ul class="dropdown-menu">
+                                @foreach (var service in serviceChildren)
+                                {
+                                    <li>
+                                        <a href="@service.Url()">
+                                            @service.Name
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                    </li>
+
                 </ul>
             </div>
         </nav>

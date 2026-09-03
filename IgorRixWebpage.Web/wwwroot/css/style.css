@@ -254,6 +254,51 @@
   opacity: 0.8;
 }
 
+.nav-dropdown {
+  position: relative;
+}
+.nav-dropdown .dropdown-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.nav-dropdown .dropdown-arrow {
+  font-size: 0.75rem;
+}
+.nav-dropdown .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: max-content;
+  min-width: 100%;
+  margin: 0;
+  padding: 0.5rem 0;
+  list-style: none;
+  background: #002463;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-5px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+  z-index: 1000;
+}
+.nav-dropdown .dropdown-menu li {
+  width: 100%;
+}
+.nav-dropdown .dropdown-menu a {
+  display: block;
+  padding: 0.65rem 1rem;
+  white-space: nowrap;
+}
+.nav-dropdown .dropdown-menu a:hover, .nav-dropdown .dropdown-menu a:focus {
+  background: #0b3dc5;
+}
+.nav-dropdown:hover .dropdown-menu, .nav-dropdown:focus-within .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
 /* ========================================================
    PURE CSS REPLICA TEXT LOGO
    ======================================================== */
@@ -1010,6 +1055,13 @@
   font-size: 0.95rem;
   line-height: 1.5;
   margin: 0;
+}
+.card-component-section .card-component-grid .flip-card-component-card-back a {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+  color: #ffffff;
+  text-decoration: underline;
 }
 
 .process-wrapper {

@@ -1,4 +1,5 @@
 using Umbraco.Cms.Core.Models;
+using IgorRixWebpage.Web.DTO;
 
 namespace IgorRixWebpage.Web.Models.NestedElements
 {
@@ -7,14 +8,7 @@ namespace IgorRixWebpage.Web.Models.NestedElements
         public string? Title { get; set; }
         public string? SubTitle { get; set; }
         public string? Body { get; set; }
-        public List<CardComponentItem>? Items { get; set; }
-    }
-
-    public class CardComponentItem
-    {
-        public string? Title { get; set; }
-        public string? SubTitle { get; set; }
-        public string? Summary { get; set; }
-        public string? Body { get; set; }
+        public List<ServiceCardDto> ServiceCards { get; set; } = new();
+        public List<ServicePageDto> ServicePages { get; set; } = new();
     }
 }

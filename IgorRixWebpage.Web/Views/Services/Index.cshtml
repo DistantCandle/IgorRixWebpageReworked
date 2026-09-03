@@ -1,6 +1,7 @@
-@model IgorRixWebpage.Web.Models.ViewModels.BasePageViewModel
 @using IgorRixWebpage.Web.Models.ViewModels
-    
+@using Microsoft.AspNetCore.Mvc.ViewFeatures
+@model IgorRixWebpage.Web.Models.ViewModels.BasePageViewModel
+
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -10,9 +11,12 @@
     var blockViewMap = new Dictionary<Type, string>
             {
                 // Add new block types here
-
+                { typeof(IgorRixWebpage.Web.Models.NestedElements.PageBanner), "~/Views/Partials/blocks/pageBanner.cshtml" },
+                { typeof(IgorRixWebpage.Web.Models.NestedElements.SectionHeader), "~/Views/Partials/blocks/sectionHeader.cshtml" },
+                { typeof(IgorRixWebpage.Web.Models.NestedElements.SectionText), "~/Views/Partials/blocks/sectionText.cshtml" },
                 { typeof(IgorRixWebpage.Web.Models.NestedElements.CardComponentContainer), "~/Views/Partials/blocks/cardComponentContainer.cshtml" },
                 { typeof(IgorRixWebpage.Web.Models.NestedElements.AccordionContainer), "~/Views/Partials/blocks/accordionContainer.cshtml" },
+                { typeof(IgorRixWebpage.Web.Models.NestedElements.ServicePageInformationContainer), "~/Views/Partials/blocks/servicePageInformationContainer.cshtml" },
             };
 
     if (blocks != null && blocks.Any())
@@ -23,7 +27,17 @@
 
             if (blockViewMap.TryGetValue(blockType, out var viewPath))
             {
-                @await Html.PartialAsync(viewPath, block)
+                @await Html.PartialAsync(
+                    viewPath,
+                    block,
+                    new ViewDataDictionary(ViewData) {
+                        ["CurrentPageUrl"] = Context.Request.Path.Value
+                    }
+                )
+            }
+            else
+            {
+                <p>Unknown block type: @blockType.Name</p>
             }
         }
     }
