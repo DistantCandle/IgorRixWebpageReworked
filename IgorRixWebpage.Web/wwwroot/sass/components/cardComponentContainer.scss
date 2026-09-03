@@ -2,7 +2,7 @@ $font-family: Arial, 'Roboto Slab', Helvetica, sans-serif;
 $card-bg-color: #77c4ff;
 $card-border-color: #e0e0e0;
 
-$card-width: 100%; // Allowed to flex fluidly within parent grid cells
+$card-width: 100%;
 $card-max-width: 320px;
 $card-height: 200px;
 $card-radius: 10px;
@@ -27,9 +27,15 @@ $text-muted: #444444;
     align-items: center;
 }
 
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 .card-component-section {
     position: relative;
-    width: 75%;
+    width: 70%;
     padding: 15px 0;
     display: flex;
     flex-direction: column;
@@ -57,6 +63,7 @@ $text-muted: #444444;
     .card-component-body {
         font-size: clamp(16px, 2vw, 18px);
         line-height: 1.7;
+        min-width: 0;
 
         display: flex;
         flex-direction: column;
@@ -71,31 +78,29 @@ $text-muted: #444444;
             margin: 0;
             line-height: 1.6;
             font-size: min(16px, 1.25rem, 18px);
+            overflow-wrap: anywhere;
         }
     }
 
-    /* Grid layout handling cards wrapper */
     .card-component-grid {
         display: flex;
         flex-wrap: wrap;
-        /* Allows cards to wrap into a second row */
         justify-content: center;
-        /* Centers all items inline, including uneven rows */
         gap: 20px;
         width: 75%;
         margin-top: 40px;
 
         .flip-card-component-card {
-            // Explicitly set flex-basis to control item footprint sizing
             flex: 0 1 $card-max-width;
-            width: 100%;
+            min-width: 0;
+            width: auto;
             height: $card-height;
             perspective: 1000px;
             padding: 0;
             border: none;
             background: transparent;
 
-            &:hover  {
+            &:hover {
                 .flip-card-component-card-inner {
                     transform: rotateY(180deg);
                 }
@@ -113,21 +118,29 @@ $text-muted: #444444;
             &-front,
             &-back {
                 @include flex-center;
+
                 position: absolute;
                 top: 0;
                 left: 0;
+
                 width: 100%;
                 height: 100%;
+
                 padding: 24px;
                 box-sizing: border-box;
+
                 border-radius: $card-radius;
                 backface-visibility: hidden;
                 -webkit-backface-visibility: hidden;
+
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             }
 
             &-front {
-                background: linear-gradient(135deg, $color-front-start 0%, $color-front-end 100%);
+                background: linear-gradient(135deg,
+                        $color-front-start 0%,
+                        $color-front-end 100%);
+
                 color: $color-text-front;
                 z-index: 2;
 
@@ -148,23 +161,55 @@ $text-muted: #444444;
             }
 
             &-back {
+                @include flex-center;
+
                 background-color: $color-back-bg;
                 transform: rotateY(180deg);
                 color: $color-text-back;
                 z-index: 1;
 
-                p {
-                    font-size: 0.95rem;
-                    line-height: 1.5;
-                    margin: 0;
+                justify-content: space-between;
+
+                .card-back-content {
+                    width: 100%;
+                    flex: 1;
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    overflow: hidden;
+
+                    p {
+                        width: 100%;
+                        margin: 0;
+
+                        font-size: 0.95rem;
+                        line-height: 1.5;
+                        text-align: center;
+
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 4;
+                        overflow: hidden;
+                    }
                 }
 
-                a{
+                .card-component-link {
+                    flex-shrink: 0;
+
+                    margin-top: 12px;
+
                     font-size: 0.95rem;
                     line-height: 1.5;
-                    margin: 0;
+
                     color: $color-text-back;
                     text-decoration: underline;
+
+                    &:hover,
+                    &:focus {
+                        text-decoration: none;
+                    }
                 }
             }
         }
@@ -179,7 +224,7 @@ $text-muted: #444444;
     font-family: Arial, sans-serif;
 
     .process-container {
-        width: 60%; // Keeps content securely targeted to 60% view width
+        width: 65%;
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
@@ -199,17 +244,20 @@ $text-muted: #444444;
             display: flex;
             align-items: center;
             justify-content: center;
+
             color: #ffffff;
             border: 2px solid #333333;
+
             margin-bottom: 25px;
+
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
             transition: transform 0.2s ease-in-out;
 
             &:hover {
                 transform: scale(1.05);
             }
 
-            // Universal clean internal SVG rules sizing inside circles
             svg {
                 width: 42%;
                 height: 42%;
@@ -252,7 +300,10 @@ $text-muted: #444444;
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 90px; // Aligns inline with center of icon-circles
+
+        // Align arrow with center of icon
+        height: 90px;
+
         color: $color-understand;
 
         svg {
@@ -263,42 +314,260 @@ $text-muted: #444444;
     }
 }
 
-@media (max-width: 1024px) {
-    .card-component-section {
-        max-width: 85%; // Drop safety handles marginally wider to breathe comfortably on tablets
-    }
-}
 
-@media (max-width: 768px) {
+// ============================================================
+// TABLET / SMALL DESKTOP
+// ============================================================
+
+@media (max-width: 1024px) {
+
     .card-component-section {
-        max-width: 90%; // Maximizes readability space on small displays
+        width: 90%;
+        max-width: 900px;
+        padding: 0 0 30px 0;
+
+        .card-component-body {
+            max-width: 85%;
+        }
 
         .card-component-grid {
-            grid-template-columns: 1fr; // Cards stack completely straight downward
+            width: 100%;
+            gap: 16px;
+
+            .flip-card-component-card {
+                flex: 0 0 calc(50% - 8px);
+                width: calc(50% - 8px);
+                max-width: auto;
+                height: 180px;
+
+                &-front,
+                &-back {
+                    padding: 18px;
+                }
+
+                &-front {
+                    overflow-wrap: anywhere;
+
+                    h3 {
+                        font-size: 1.05rem;
+                    }
+
+                    h4 {
+                        font-size: 1rem;
+                    }
+                }
+
+                &-back {
+                    overflow-wrap: anywhere;
+
+                    .card-back-content {
+                        p {
+                            font-size: 0.88rem;
+                            line-height: 1.4;
+                            -webkit-line-clamp: 4;
+                        }
+                    }
+
+                    .card-component-link {
+                        font-size: 0.88rem;
+                        margin-top: 8px;
+                    }
+                }
+            }
         }
     }
-}
 
-@media (max-width: 768px) {
     .process-wrapper {
+
         .process-container {
             width: 85%;
-            flex-direction: column;
-            align-items: center;
         }
 
         .process-step {
-            width: 100%;
-            margin: 20px 0;
+            width: 19%;
+
+            .icon-circle {
+                width: 75px;
+                height: 75px;
+                margin-bottom: 18px;
+            }
+
+            .step-title {
+                font-size: 1.1rem;
+                margin-bottom: 10px;
+            }
+
+            .step-description {
+                font-size: 0.85rem;
+            }
         }
 
         .process-arrow {
-            width: auto;
-            height: auto;
-            transform: rotate(90deg); // Points arrows downward on phone layouts
-            margin: 10px 0;
+            width: 5%;
+
+            svg {
+                max-width: 26px;
+            }
+        }
+    }
+}
+
+@media (max-width: 1023px) {
+    .process-wrapper {
+        display: none;
+    }
+}
+
+
+
+
+// ============================================================
+// TABLET
+// ============================================================
+
+@media (max-width: 768px) {
+
+    .card-component-section {
+        width: 94%;
+        max-width: 100%;
+        min-width: 0;
+
+        h2 {
+            font-size: 1.6rem;
+        }
+
+        h3 {
+            font-size: 1rem;
+        }
+
+        .card-component-body {
+            width: 100%;
+            max-width: 95%;
+        }
+
+        .card-component-grid {
+            width: 100%;
+            min-width: 0;
+            gap: 14px;
+
+            .flip-card-component-card {
+                flex: 0 0 calc(50% - 7px);
+                width: calc(50% - 7px);
+                max-width: auto;
+                height: 175px;
+
+                &-front,
+                &-back {
+                    padding: 16px;
+                    border-radius: 8px;
+                }
+
+                &-front {
+
+                    h3 {
+                        font-size: 1rem;
+                    }
+
+                    h4 {
+                        font-size: 0.95rem;
+                    }
+                }
+
+                &-back {
+
+                    .card-back-content {
+
+                        p {
+                            font-size: 0.82rem;
+                            line-height: 1.35;
+                            -webkit-line-clamp: 4;
+                        }
+                    }
+
+                    .card-component-link {
+                        font-size: 0.82rem;
+                        margin-top: 8px;
+                    }
+                }
+            }
         }
     }
 
+}
 
+
+// ============================================================
+// MOBILE
+// ============================================================
+
+@media (max-width: 425px) {
+
+    .card-component-section {
+        width: 94%;
+        max-width: 100%;
+
+        h2 {
+            font-size: 1.4rem;
+        }
+
+        h3 {
+            font-size: 0.95rem;
+        }
+
+        .card-component-body {
+            width: 100%;
+            max-width: 100%;
+
+            p {
+                font-size: 16px;
+                line-height: 1.5;
+            }
+        }
+
+        .card-component-grid {
+            width: 100%;
+            gap: 16px;
+
+            .flip-card-component-card {
+                flex: 0 0 100%;
+                width: 100%;
+                max-width: 320px;
+                height: 190px;
+
+                &-front,
+                &-back {
+                    padding: 20px;
+                    border-radius: 8px;
+                }
+
+                &-front {
+
+                    h3 {
+                        font-size: 1.05rem;
+                    }
+
+                    h4 {
+                        font-size: 0.95rem;
+                    }
+                }
+
+                &-back {
+
+                    .card-back-content {
+
+                        p {
+                            font-size: 0.9rem;
+                            line-height: 1.45;
+                            -webkit-line-clamp: 4;
+                        }
+                    }
+
+                    .card-component-link {
+                        font-size: 0.9rem;
+                        margin-top: 10px;
+                    }
+                }
+            }
+        }
+    }
 }

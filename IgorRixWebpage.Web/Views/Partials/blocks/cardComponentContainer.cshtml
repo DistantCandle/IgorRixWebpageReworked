@@ -25,7 +25,8 @@
         </div>
     }
 
-    @if (ViewData["CurrentPageUrl"]?.ToString()?.TrimEnd('/') == "/services") {
+    @if (ViewData["CurrentPageUrl"]?.ToString()?.TrimEnd('/') == "/services")
+    {
         <div class="process-wrapper">
             <div class="process-container">
 
@@ -155,12 +156,13 @@
                         }
                     </div>
                     <div class="flip-card-component-card-back">
-                        @if (!string.IsNullOrWhiteSpace(serviceCard.Summary))
-                        {
-                            <p>@Html.Raw(serviceCard.Summary)</p>
-
-                        }
-                        <a href="@serviceCard.ServiceUrl" target="_blank">Learn More</a>
+                        <div class="card-back-content">
+                            @if (!string.IsNullOrWhiteSpace(serviceCard.Summary))
+                            {
+                                <p>@Html.Raw(serviceCard.Summary)</p>
+                            }
+                        </div>
+                        <a class="card-component-link" href="@serviceCard.ServiceUrl">Learn More >>></a>
                     </div>
                 </div>
             </div>

@@ -16,6 +16,97 @@
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
     <link href="https://googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="anonymous">
 </head>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const navToggle = document.querySelector('.nav-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        const servicesDropdown =
+            document.querySelector('.nav-dropdown');
+
+        const servicesToggle =
+            document.querySelector('.dropdown-toggle');
+
+
+        /* Hamburger */
+
+        if (navToggle && navLinks) {
+
+            navToggle.addEventListener('click', function () {
+
+                const isOpen =
+                    navLinks.classList.toggle('is-open');
+
+                navToggle.classList.toggle(
+                    'is-active',
+                    isOpen
+                );
+
+                navToggle.setAttribute(
+                    'aria-expanded',
+                    isOpen ? 'true' : 'false'
+                );
+            });
+        }
+
+
+        /* Services mobile submenu */
+
+        if (servicesToggle && servicesDropdown) {
+
+            servicesToggle.addEventListener(
+                'click',
+                function (event) {
+
+                    if (window.innerWidth <= 425) {
+
+                        event.preventDefault();
+                        event.stopPropagation();
+
+                        const isOpen =
+                            servicesDropdown.classList.toggle(
+                                'is-submenu-open'
+                            );
+
+                        servicesToggle.setAttribute(
+                            'aria-expanded',
+                            isOpen ? 'true' : 'false'
+                        );
+                    }
+                }
+            );
+        }
+
+
+        /* Reset mobile state when resizing */
+
+        window.addEventListener('resize', function () {
+
+            if (window.innerWidth > 425) {
+
+                navLinks?.classList.remove('is-open');
+
+                navToggle?.classList.remove('is-active');
+
+                navToggle?.setAttribute(
+                    'aria-expanded',
+                    'false'
+                );
+
+                servicesDropdown?.classList.remove(
+                    'is-submenu-open'
+                );
+
+                servicesToggle?.setAttribute(
+                    'aria-expanded',
+                    'false'
+                );
+            }
+        });
+
+    });
+</script>
 
 <body>
     <header class="site-header">
@@ -47,7 +138,7 @@
                     <span class="header-contact-title">Director | Universal Access Consultant</span>
                 </div> *@
 
-                <div class="contact-methods">
+                <div class="header-contact-methods">
                     <!-- Telephone link structure -->
                     <div class="header-phone-display">
                         <span class="header-phone-prefix">P:</span>
@@ -85,39 +176,58 @@
 
         <nav class="navbar">
             <div class="nav-container">
-                <ul class="nav-links">
+
+                <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false"
+                        aria-controls="main-navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <ul class="nav-links" id="main-navigation">
 
                     <li>
-                        <a href="@Url.Content("~/")">Home</a>
+                        <a href="@Url.Content("~/")">
+                            Home
+                        </a>
                     </li>
 
                     <li>
-                        <a href="@Url.Content("~/about-us")">About Us</a>
+                        <a href="@Url.Content("~/about-us")">
+                            About Us
+                        </a>
                     </li>
 
                     <li class="nav-dropdown">
-                        <a href="@Url.Content("~/services")" class="dropdown-toggle">
-                            Services
+
+                        <a href="@Url.Content("~/services")" class="dropdown-toggle" aria-haspopup="true"
+                           aria-expanded="false">
+
+                            <span>Services</span>
 
                             @if (serviceChildren?.Any() == true)
                             {
                                 <span class="dropdown-arrow">▾</span>
                             }
+
                         </a>
 
                         @if (serviceChildren?.Any() == true)
                         {
                             <ul class="dropdown-menu">
+
                                 @foreach (var service in serviceChildren)
                                 {
                                     <li>
-                                        <a href="@service.Url()"  target="_blank">
+                                        <a href="@service.Url()">
                                             @service.Name
                                         </a>
                                     </li>
                                 }
+
                             </ul>
                         }
+
                     </li>
 
                 </ul>
@@ -140,9 +250,8 @@
                 <h3 class="footer-heading">Quick Links</h3>
                 <ul class="footer-vertical-links">
                     <li><a href="@Url.Content("~/")">Home</a></li>
-                    <li><a href="@Url.Content("~/AboutUs")">About Us</a></li>
-                    <li><a href="@Url.Content("~/Services")">Services</a></li>
-                    <li><a href="@Url.Content("~/ContactUs")">Contact Us</a></li>
+                    <li><a href="@Url.Content("~/about-us")">About Us</a></li>
+                    <li><a href="@Url.Content("~/services")">Services</a></li>
                 </ul>
             </div>
 
